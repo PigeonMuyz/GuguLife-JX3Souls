@@ -1,0 +1,46 @@
+plugins:
+  group:server:
+    server:b304an:
+      port: 5140
+      maxPort: 5149
+      host: 0.0.0.0
+  group:basic:
+    commands:aefq7n: {}
+    help:qsmhf9: {}
+    http:v7c6uk: {}
+    locales:po45v2: {}
+    proxy-agent:flh6bn: {}
+    rate-limit:jedpwn: {}
+  group:console:
+    actions:21yp0l: {}
+    config:05lnt3: {}
+    console:7i4yi6:
+      open: true
+    dataview:2d8h7w: {}
+    explorer:mqave4: {}
+    logger:nxf5jx: {}
+    market:bjhd8i:
+      search:
+        endpoint: https://registry.koishi.chat/index.json
+    notifier:ty6ee1: {}
+    status:fwezt5: {}
+    theme-vanilla:ssf8az: {}
+  group:storage:
+    database-sqlite:2kojnt:
+      path: data/koishi.db
+    assets-local:fhvszg: {}
+  group:adapter:
+    adapter-onebot:axrqqs:
+      path: /onebot/v11/ws
+      endpoint: ws://127.0.0.1:2333/
+      token: your-token-here
+      selfId: '000000000'
+      keepAlive: false
+      responseTimeout: 30000
+  group:develop:
+    $if: env.NODE_ENV === 'development'
+    hmr:hx6dv3:
+      root: .
+  group:custom:
+    jx3-soul-new:jx3soulnew001: null
+  puppeteer:642yuf: {}
