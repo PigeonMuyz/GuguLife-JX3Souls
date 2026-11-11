@@ -214,13 +214,17 @@ IP属地：${profile.location || "未知"}
 /**
  * AI供应商
  */
+// Set NVIDIA_API_KEY in the service environment before startup. Never commit keys.
+// Missing or blank keys disable NVIDIA selection without affecting other providers.
+const nvidiaApiKey = process.env.NVIDIA_API_KEY?.trim() || "";
+
 const AIProviders: aiConfig[] = [
   // {
   //   modelProvider: {
   //     name: "火山方舟",
   //     url: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
   //     responseType: "openai",
-  //     accessToken: "8a85758c-1a07-4266-8d9e-4a9df5c5c341",
+  //     accessToken: process.env.VOLCENGINE_API_KEY?.trim() || "",
   //     modelProviderWeight: 40,
   //   },
   //   models: [
@@ -362,8 +366,8 @@ const AIProviders: aiConfig[] = [
       name: "NVIDIA",
       url: "https://integrate.api.nvidia.com/v1/chat/completions",
       responseType: "openai",
-      accessToken: "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",
-      modelProviderWeight: 20,
+      accessToken: nvidiaApiKey,
+      modelProviderWeight: nvidiaApiKey ? 20 : 0,
     },
     models: [
       {
