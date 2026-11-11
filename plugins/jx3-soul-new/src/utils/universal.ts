@@ -2,9 +2,9 @@ import { ADMIN_IDS, SERVER_PRESETS } from "../config";
 import { aiConfig, SoulExclusion, SoulProfile } from "../types";
 import axios from "axios";
 
-// Bark 通知配置（用于掉线检测）
+// Bark 通知配置（用于掉线检测）；在服务环境中设置 BARK_DEVICE_KEY，勿提交密钥。
 const BARK_CONFIG = {
-  deviceKey: '3LrVUYJfUDvE9Up8Qxt7CD',
+  deviceKey: process.env.BARK_DEVICE_KEY?.trim() || "",
   serverUrl: 'https://api.day.app',
   title: 'GuguLite Bot',
   group: 'bot-status',
@@ -18,6 +18,9 @@ const OFFLINE_NOTIFY_COOLDOWN = 60000; // 60秒内不重复通知
  * 发送 Bark 掉线通知
  */
 async function sendOfflineNotification(selfId: string, error: any) {
+  // 未配置时不发送请求，也不占用通知冷却时间。
+  if (!BARK_CONFIG.deviceKey) return;
+
   const now = Date.now();
   // 避免短时间内重复通知
   if (now - lastOfflineNotifyTime < OFFLINE_NOTIFY_COOLDOWN) {
@@ -37,7 +40,8 @@ async function sendOfflineNotification(selfId: string, error: any) {
     await axios.get(url, { params, timeout: 10000 });
     console.log(`[掉线检测] 已发送 Bark 通知: ${selfId}`);
   } catch (e) {
-    console.error('[掉线检测] 发送 Bark 通知失败:', e);
+    // Axios 错误可能包含带设备密钥的请求 URL，避免将其写入日志。
+    console.error('[掉线检测] 发送 Bark 通知失败');
   }
 }
 
